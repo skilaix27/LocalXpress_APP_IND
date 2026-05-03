@@ -1,5 +1,8 @@
 {
   "name": "localxpress-public-backend",
   "private": true,
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "helmet": "^8.1.0"
+  }
 }

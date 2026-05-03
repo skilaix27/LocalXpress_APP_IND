@@ -23,3 +23,11 @@ export const checkoutLimiter = rateLimit({
   legacyHeaders: false,
   message: { ok: false, error: "Too many checkout attempts, please slow down." },
 });
+
+export const orderStatusLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: "Too many status requests, please slow down." },
+});

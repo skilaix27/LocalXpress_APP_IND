@@ -92,11 +92,40 @@ function writeJsonFile<T>(filePath: string, data: T[]): void {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n", "utf-8");
 }
 
+// ─── Draft cleanup ────────────────────────────────────────────────────────────
+
+// Removes drafts older than maxAgeHours from drafts.json.
+// Never touches orders.json. Safe to call before creating a new draft.
+export async function cleanupOldDrafts(maxAgeHours = 24): Promise<{ removed: number }> {
+  try {
+    const drafts = readJsonFile<OrderDraft>(DRAFTS_FILE);
+    const cutoffMs = Date.now() - maxAgeHours * 60 * 60 * 1000;
+    const fresh = drafts.filter((d) => {
+      const ts = new Date(d.created_at).getTime();
+      return Number.isNaN(ts) || ts >= cutoffMs; // keep if unreadable (safe default)
+    });
+    const removed = drafts.length - fresh.length;
+    if (removed > 0) {
+      writeJsonFile(DRAFTS_FILE, fresh);
+    }
+    if (process.env.LOG_LEVEL === "debug") {
+      console.log(`[orders] cleanupOldDrafts: removed=${removed}, kept=${fresh.length}`);
+    }
+    return { removed };
+  } catch (err: unknown) {
+    console.warn("[orders] cleanupOldDrafts failed (non-fatal):", (err as Error).message);
+    return { removed: 0 };
+  }
+}
+
 // ─── Draft orders ─────────────────────────────────────────────────────────────
 
 export async function createDraftOrder(
   input: CreateDraftOrderInput
 ): Promise<OrderDraft> {
+  // Best-effort cleanup of stale drafts — failure must never block order creation.
+  void cleanupOldDrafts();
+
   const draft: OrderDraft = {
     id:         randomUUID(),
     created_at: new Date().toISOString(),

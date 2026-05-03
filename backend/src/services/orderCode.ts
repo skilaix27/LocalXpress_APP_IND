@@ -10,6 +10,9 @@ const STATE_FILE = path.join(DATA_DIR, "order-code-state.json");
 
 const MONTH_INITIALS = ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
+// Entries older than this many days are pruned on each code generation.
+const MAX_STATE_AGE_DAYS = 7;
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface DayState {
@@ -55,6 +58,22 @@ function randomIncrement(): number {
   return Math.floor(Math.random() * 5) + 1; // 1–5
 }
 
+// Removes state entries older than MAX_STATE_AGE_DAYS.
+// Always preserves todayKey even if it would otherwise qualify for removal.
+function pruneOldEntries(state: CodeState, todayKey: string): CodeState {
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - MAX_STATE_AGE_DAYS);
+  const cutoffKey = cutoff.toISOString().split("T")[0]; // "YYYY-MM-DD"
+
+  const pruned: CodeState = {};
+  for (const [day, dayState] of Object.entries(state)) {
+    if (day >= cutoffKey || day === todayKey) {
+      pruned[day] = dayState;
+    }
+  }
+  return pruned;
+}
+
 // ─── Public function ──────────────────────────────────────────────────────────
 
 export async function generatePublicOrderCode(): Promise<string> {
@@ -62,7 +81,9 @@ export async function generatePublicOrderCode(): Promise<string> {
   const todayKey = getTodayKey(now);
   const prefix   = getDayPrefix(now);
 
-  const state    = readState();
+  const rawState = readState();
+  // Prune entries older than MAX_STATE_AGE_DAYS before reading today's state.
+  const state    = pruneOldEntries(rawState, todayKey);
   const dayState = state[todayKey];
 
   // ── First order of the day ────────────────────────────────────────────────

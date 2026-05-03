@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { getPaidOrderBySessionId } from "../services/orders";
+import { orderStatusLimiter } from "../middleware/rateLimiter";
 
 export const orderStatusRouter = Router();
 
 // GET /api/public/order-status?session_id=cs_test_...
-orderStatusRouter.get("/order-status", async (req, res) => {
+orderStatusRouter.get("/order-status", orderStatusLimiter, async (req, res) => {
   const sessionId = (req.query.session_id as string | undefined)?.trim();
 
   if (!sessionId) {
