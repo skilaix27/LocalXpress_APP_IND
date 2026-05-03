@@ -1,0 +1,4 @@
+project_id = "ymtfpmrfnctdsjvlipot"
+
+[functions.send-pickup-request]
+verify_jwt = false
