@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Production base: serves the app under the public sub-path.
+  // Development base: "/" so localhost:8080 works without a prefix.
+  base: mode === "production" ? "/solicitar-recogida/formulario/" : "/",
   server: {
     host: "::",
     port: 8080,

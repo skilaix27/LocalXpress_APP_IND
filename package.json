@@ -9,6 +9,9 @@
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:backend": "tsc --project backend/tsconfig.json",
+    "build:all": "npm run build && npm run build:backend",
+    "start:backend": "node backend/dist/index.js",
     "typecheck:backend": "tsc --project backend/tsconfig.json --noEmit",
     "lint": "eslint .",
     "preview": "vite preview"

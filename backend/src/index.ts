@@ -18,6 +18,10 @@ import { orderStatusRouter } from "./routes/orderStatus";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
+// HOST defaults to 0.0.0.0 (all interfaces) in development.
+// Set HOST=127.0.0.1 in production so the port is not publicly reachable —
+// Nginx proxies HTTPS traffic to it internally.
+const HOST = process.env.HOST || "0.0.0.0";
 const isProd = process.env.NODE_ENV === "production";
 
 // ─── Startup config check ─────────────────────────────────────────────────────
@@ -108,7 +112,7 @@ app.use("/api/public", orderStatusRouter);
 
 // ─── Start ────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  console.log(`[localxpress-backend] Running on port ${PORT} (${isProd ? "production" : "development"})`);
+app.listen(PORT, HOST, () => {
+  console.log(`[localxpress-backend] Running on ${HOST}:${PORT} (${isProd ? "production" : "development"})`);
   logStartupConfig();
 });

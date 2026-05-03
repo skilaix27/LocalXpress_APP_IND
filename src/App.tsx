@@ -10,15 +10,20 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+// Vite sets BASE_URL to the `base` value in vite.config.ts.
+// In production: "/solicitar-recogida/formulario/"
+// In development: "/"
+// React Router basename must not have a trailing slash.
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/solicitar-recogida/formulario" element={<Index />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
           <Route path="*" element={<NotFound />} />
