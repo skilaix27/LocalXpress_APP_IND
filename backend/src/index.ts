@@ -84,6 +84,12 @@ app.use(
   })
 );
 
+// ─── Proxy trust ─────────────────────────────────────────────────────────────
+// The backend sits behind a single Nginx reverse proxy.
+// "1" tells Express to trust the first X-Forwarded-For entry only,
+// which is required for express-rate-limit to read the real client IP.
+app.set("trust proxy", 1);
+
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
 // Stripe webhook requires raw body — must be registered before express.json()
