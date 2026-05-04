@@ -127,24 +127,29 @@ const Index = () => {
       scheduled_time = specificTime;
     }
 
+    // Recipient and product info packed into notes (recipient identity
+    // is now sent in dedicated fields and removed from here)
     const noteParts: string[] = [];
-    if (recipientName)  noteParts.push(`Destinatario: ${recipientName}`);
-    if (recipientPhone) noteParts.push(`Tel. dest.: ${recipientPhone}`);
     const displayProduct = productType === "otro" ? otherProduct : productType;
     if (displayProduct) noteParts.push(`Producto: ${displayProduct}`);
     if (isFragile === "si") noteParts.push("¡FRÁGIL!");
     if (notes) noteParts.push(notes);
 
     return {
-      pickup_address:   pickupAddress.trim(),
-      delivery_address: deliveryAddress.trim(),
-      client_name:      senderName.trim(),
-      client_phone:     senderPhone.replace(/\s/g, ""),
-      customer_email:   senderEmail.trim(),
+      // Recipient of the package
+      client_name:        recipientName.trim(),
+      client_phone:       recipientPhone.replace(/\s/g, ""),
+      // Person placing / paying the order
+      customer_full_name: senderName.trim(),
+      customer_phone:     senderPhone.replace(/\s/g, ""),
+      customer_email:     senderEmail.trim(),
+      // Service
+      pickup_address:     pickupAddress.trim(),
+      delivery_address:   deliveryAddress.trim(),
       scheduled_date,
       scheduled_time,
-      package_size:     PACKAGE_SIZE_MAP[productSize] ?? "small",
-      client_notes:     noteParts.join(" | ") || undefined,
+      package_size:       PACKAGE_SIZE_MAP[productSize] ?? "small",
+      client_notes:       noteParts.join(" | ") || undefined,
       ...(pickupLat   != null && pickupLng   != null ? { pickup_lat:   pickupLat,   pickup_lng:   pickupLng   } : {}),
       ...(deliveryLat != null && deliveryLng != null ? { delivery_lat: deliveryLat, delivery_lng: deliveryLng } : {}),
     };

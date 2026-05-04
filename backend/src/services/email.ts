@@ -92,11 +92,19 @@ function adminHtml(o: PaidOrder): string {
 
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 16px 0;">
 
-  <p style="margin:0 0 4px 0;font-weight:bold;">Cliente</p>
+  <p style="margin:0 0 4px 0;font-weight:bold;">Cliente que solicita</p>
+  <p style="margin:0 0 16px 0;">
+    Nombre: ${o.customer_full_name ?? "No indicado"}<br>
+    Teléfono: ${o.customer_phone ?? "No indicado"}<br>
+    Email: ${o.customer_email}
+  </p>
+
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 16px 0;">
+
+  <p style="margin:0 0 4px 0;font-weight:bold;">Destinatario</p>
   <p style="margin:0 0 16px 0;">
     Nombre: ${o.client_name}<br>
-    Teléfono: ${o.client_phone}<br>
-    Email: ${o.customer_email}
+    Teléfono: ${o.client_phone}
   </p>
 
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 16px 0;">
@@ -139,10 +147,14 @@ function adminText(o: PaidOrder): string {
     `Nuevo pedido pagado — LocalXpress`,
     `Código: ${displayCode(o)}  ·  Precio: ${o.price !== null ? o.price + " €" : "Presupuesto personalizado"}`,
     ``,
-    `CLIENTE`,
+    `CLIENTE QUE SOLICITA`,
+    `Nombre: ${o.customer_full_name ?? "No indicado"}`,
+    `Teléfono: ${o.customer_phone ?? "No indicado"}`,
+    `Email: ${o.customer_email}`,
+    ``,
+    `DESTINATARIO`,
     `Nombre: ${o.client_name}`,
     `Teléfono: ${o.client_phone}`,
-    `Email: ${o.customer_email}`,
     ``,
     `SERVICIO`,
     `Recogida: ${o.pickup_address}`,
@@ -173,7 +185,7 @@ function customerHtml(o: PaidOrder): string {
 <head><meta charset="UTF-8"><title>Pedido LocalXpress confirmado</title></head>
 <body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px 16px;color:#111827;font-size:14px;line-height:1.6;">
 
-  <p style="margin:0 0 16px 0;">Hola, <strong>${o.client_name}</strong></p>
+  <p style="margin:0 0 16px 0;">Hola, <strong>${o.customer_full_name ?? o.client_name}</strong></p>
 
   <p style="margin:0 0 8px 0;">
     Hemos recibido correctamente tu solicitud de envío y el pago se ha confirmado con éxito.
@@ -192,6 +204,8 @@ function customerHtml(o: PaidOrder): string {
     Fecha del servicio: ${fmtDate(o.scheduled_date)} a las ${o.scheduled_time}<br>
     Recogida: ${o.pickup_address}<br>
     Entrega: ${o.delivery_address}<br>
+    Destinatario: ${o.client_name}<br>
+    Teléfono destinatario: ${o.client_phone}<br>
     Tipo de paquete: ${pkg(o.package_size)}<br>
     Precio pagado: <strong>${o.price !== null ? o.price + " &#8364;" : "Presupuesto personalizado"}</strong>
   </p>
@@ -207,7 +221,7 @@ function customerHtml(o: PaidOrder): string {
 function customerText(o: PaidOrder): string {
   const code = displayCode(o);
   return [
-    `Hola, ${o.client_name}`,
+    `Hola, ${o.customer_full_name ?? o.client_name}`,
     ``,
     `Hemos recibido correctamente tu solicitud de envío y el pago se ha confirmado con éxito.`,
     `Nuestro equipo gestionará el servicio según la fecha y hora seleccionadas.`,
@@ -217,6 +231,8 @@ function customerText(o: PaidOrder): string {
     `Fecha del servicio: ${fmtDate(o.scheduled_date)} a las ${o.scheduled_time}`,
     `Recogida: ${o.pickup_address}`,
     `Entrega: ${o.delivery_address}`,
+    `Destinatario: ${o.client_name}`,
+    `Teléfono destinatario: ${o.client_phone}`,
     `Tipo de paquete: ${pkg(o.package_size)}`,
     `Precio pagado: ${o.price !== null ? o.price + " €" : "Presupuesto personalizado"}`,
     ``,

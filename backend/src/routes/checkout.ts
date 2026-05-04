@@ -65,11 +65,16 @@ checkoutRouter.post("/checkout", checkoutLimiter, async (req, res) => {
   let draft: Awaited<ReturnType<typeof createDraftOrder>>;
   try {
     draft = await createDraftOrder({
-      pickup_address:        data.pickup_address,
-      delivery_address:      data.delivery_address,
+      // Recipient of the package
       client_name:           data.client_name,
       client_phone:          data.client_phone,
+      // Person placing / paying the order
+      customer_full_name:    data.customer_full_name,
+      customer_phone:        data.customer_phone,
       customer_email:        data.customer_email,
+      // Service
+      pickup_address:        data.pickup_address,
+      delivery_address:      data.delivery_address,
       scheduled_date:        data.scheduled_date,
       scheduled_time:        data.scheduled_time,
       package_size:          data.package_size,

@@ -13,11 +13,16 @@ const ORDERS_FILE = path.join(DATA_DIR, "orders.json");
 export interface OrderDraft {
   id:                    string;
   created_at:            string;
-  pickup_address:        string;
-  delivery_address:      string;
+  // Recipient of the package
   client_name:           string;
   client_phone:          string;
+  // Person placing / paying the order (optional for backward-compat with old orders)
+  customer_full_name?:   string;
+  customer_phone?:       string;
   customer_email:        string;
+  // Service
+  pickup_address:        string;
+  delivery_address:      string;
   scheduled_date:        string;
   scheduled_time:        string;
   package_size:          "small" | "medium" | "large";

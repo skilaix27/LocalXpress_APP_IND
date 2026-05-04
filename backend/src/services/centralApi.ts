@@ -87,11 +87,14 @@ export async function createOrderInCentralApi(
     delivery_address:           order.delivery_address,
     delivery_lat:               order.delivery_lat ?? null,
     delivery_lng:               order.delivery_lng ?? null,
+    // Recipient of the package
     client_name:                order.client_name,
     client_phone:               order.client_phone,
+    // Person who placed / paid the order
+    // Fall back to client fields for orders created before this separation was introduced.
     customer_email:             order.customer_email,
-    customer_full_name:         order.client_name,
-    customer_phone:             order.client_phone,
+    customer_full_name:         order.customer_full_name ?? order.client_name,
+    customer_phone:             order.customer_phone    ?? order.client_phone,
     client_notes:               order.client_notes || null,
     scheduled_pickup_at:        normalizeScheduledPickupAtForCentralApi(order.scheduled_date, order.scheduled_time),
     distance_km:                order.distance_km,
