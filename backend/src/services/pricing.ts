@@ -15,19 +15,20 @@ export interface PriceResult {
 }
 
 export const PRICING_ZONES: PricingZone[] = [
-  { zone_name: "Zona 1",  min_km: 0,   max_km: 2.5,  price: 8   },
-  { zone_name: "Zona 2",  min_km: 2.5, max_km: 7,    price: 11  },
-  { zone_name: "Zona 3",  min_km: 7,   max_km: 15,   price: 14  },
-  { zone_name: "Zona 4",  min_km: 15,  max_km: 20,   price: 28  },
-  { zone_name: "Zona 5",  min_km: 20,  max_km: 25,   price: 38  },
-  { zone_name: "Zona 6",  min_km: 25,  max_km: 35,   price: 48  },
-  { zone_name: "Zona 7",  min_km: 35,  max_km: 45,   price: 59  },
-  { zone_name: "Zona 8",  min_km: 45,  max_km: 55,   price: 68  },
-  { zone_name: "Zona 9",  min_km: 55,  max_km: 65,   price: 79  },
-  { zone_name: "Zona 10", min_km: 65,  max_km: 75,   price: 89  },
-  { zone_name: "Zona 11", min_km: 75,  max_km: 80,   price: 105 },
-  { zone_name: "Zona 12", min_km: 80,  max_km: 100,  price: 120 },
-  { zone_name: "Zona 13", min_km: 100, max_km: 120,  price: 145 },
+  { zone_name: "Zona 1",  min_km: 0,    max_km: 2.5,  price: 8   },
+  { zone_name: "Zona 2",  min_km: 2.5,  max_km: 7,    price: 11  },
+  { zone_name: "Zona 3",  min_km: 7,    max_km: 12,   price: 14  },
+  { zone_name: "Zona 4",  min_km: 12,   max_km: 16,   price: 18  },
+  { zone_name: "Zona 5",  min_km: 16,   max_km: 20,   price: 26  },
+  { zone_name: "Zona 6",  min_km: 20,   max_km: 25,   price: 36  },
+  { zone_name: "Zona 7",  min_km: 25,   max_km: 35,   price: 46  },
+  { zone_name: "Zona 8",  min_km: 35,   max_km: 45,   price: 56  },
+  { zone_name: "Zona 9",  min_km: 45,   max_km: 55,   price: 68  },
+  { zone_name: "Zona 10", min_km: 55,   max_km: 65,   price: 78  },
+  { zone_name: "Zona 11", min_km: 65,   max_km: 75,   price: 89  },
+  { zone_name: "Zona 12", min_km: 75,   max_km: 85,   price: 105 },
+  { zone_name: "Zona 13", min_km: 85,   max_km: 100,  price: 120 },
+  { zone_name: "Zona 14", min_km: 100,  max_km: 120,  price: 145 },
 ];
 
 // Matches the margin applied by the central LocalXpress app.
