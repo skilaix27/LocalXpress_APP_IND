@@ -43,17 +43,18 @@ export interface CheckoutResult {
 }
 
 export interface OrderStatusResult {
-  ok:               boolean;
-  payment_status?:  "paid" | "pending";
-  order_code?:      string;
-  client_name?:     string;
-  pickup_address?:  string;
-  delivery_address?: string;
-  scheduled_date?:  string;
-  scheduled_time?:  string;
-  zone_name?:       string;
-  price?:           number | null;
-  error?:           string;
+  ok:                  boolean;
+  payment_status?:     "paid" | "pending";
+  order_code?:         string;
+  customer_full_name?: string | null;
+  client_name?:        string;
+  pickup_address?:     string;
+  delivery_address?:   string;
+  scheduled_date?:     string;
+  scheduled_time?:     string;
+  zone_name?:          string;
+  price?:              number | null;
+  error?:              string;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

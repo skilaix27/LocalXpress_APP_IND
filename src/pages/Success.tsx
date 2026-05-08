@@ -114,7 +114,7 @@ const Success = () => {
                 ¡Pedido confirmado!
               </CardTitle>
               <p className="text-center text-sm text-muted-foreground mt-1">
-                Hola <strong>{order.client_name}</strong>, hemos recibido tu pago.
+                Hola <strong>{order.customer_full_name ?? order.client_name}</strong>, hemos recibido tu pago.
                 Recibirás un email de confirmación en breve.
               </p>
             </CardHeader>

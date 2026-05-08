@@ -23,16 +23,17 @@ orderStatusRouter.get("/order-status", orderStatusLimiter, async (req, res) => {
     }
 
     res.json({
-      ok:               true,
-      payment_status:   "paid",
-      order_code:       order.order_code,
-      client_name:      order.client_name,
-      pickup_address:   order.pickup_address,
-      delivery_address: order.delivery_address,
-      scheduled_date:   order.scheduled_date,
-      scheduled_time:   order.scheduled_time,
-      zone_name:        order.zone_name,
-      price:            order.price,
+      ok:                  true,
+      payment_status:      "paid",
+      order_code:          order.order_code,
+      customer_full_name:  order.customer_full_name ?? null,
+      client_name:         order.client_name,
+      pickup_address:      order.pickup_address,
+      delivery_address:    order.delivery_address,
+      scheduled_date:      order.scheduled_date,
+      scheduled_time:      order.scheduled_time,
+      zone_name:           order.zone_name,
+      price:               order.price,
     });
   } catch (err: unknown) {
     console.error("[order-status] Error:", (err as Error).message);

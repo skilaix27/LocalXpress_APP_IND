@@ -101,7 +101,7 @@ function adminHtml(o: PaidOrder): string {
 
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 16px 0;">
 
-  <p style="margin:0 0 4px 0;font-weight:bold;">Destinatario</p>
+  <p style="margin:0 0 4px 0;font-weight:bold;">Destinatario del paquete</p>
   <p style="margin:0 0 16px 0;">
     Nombre: ${o.client_name}<br>
     Teléfono: ${o.client_phone}
@@ -152,7 +152,7 @@ function adminText(o: PaidOrder): string {
     `Teléfono: ${o.customer_phone ?? "No indicado"}`,
     `Email: ${o.customer_email}`,
     ``,
-    `DESTINATARIO`,
+    `DESTINATARIO DEL PAQUETE`,
     `Nombre: ${o.client_name}`,
     `Teléfono: ${o.client_phone}`,
     ``,
