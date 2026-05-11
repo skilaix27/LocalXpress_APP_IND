@@ -4,23 +4,24 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 export interface QuotePayload {
   // Recipient of the package
-  client_name:        string;
-  client_phone:       string;
+  client_name:         string;
+  client_phone:        string;
   // Person placing / paying the order
-  customer_full_name: string;
-  customer_phone:     string;
-  customer_email:     string;
+  customer_full_name:  string;
+  customer_phone:      string;
+  customer_email:      string;
   // Service
-  pickup_address:     string;
-  delivery_address:   string;
-  scheduled_date:     string;
-  scheduled_time:     string;
-  package_size:       "small" | "medium" | "large";
-  client_notes?:      string;
-  pickup_lat?:        number | null;
-  pickup_lng?:        number | null;
-  delivery_lat?:      number | null;
-  delivery_lng?:      number | null;
+  pickup_address:      string;
+  delivery_address:    string;
+  scheduled_date:      string;
+  scheduled_time:      string;
+  scheduled_time_type?: "asap" | "morning" | "afternoon" | "specific";
+  package_size:        "small" | "medium" | "large";
+  client_notes?:       string;
+  pickup_lat?:         number | null;
+  pickup_lng?:         number | null;
+  delivery_lat?:       number | null;
+  delivery_lng?:       number | null;
 }
 
 export interface QuoteResult {

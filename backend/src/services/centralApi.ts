@@ -34,10 +34,17 @@ function getMadridOffsetString(date: Date): string {
   return `${sign}${hours}:${minutes}`;
 }
 
-export function normalizeScheduledPickupAtForCentralApi(date: string, time: string): string {
-  // Build naive datetime from date ("YYYY-MM-DD") + time ("HH:MM" or human label).
-  const safeTime = TIME_REGEX.test(time) ? time : "10:00";
-  const naive    = `${date}T${safeTime}:00`;
+export function buildScheduledPickupAt(
+  date: string,
+  time: string,
+  timeType?: "asap" | "morning" | "afternoon" | "specific"
+): string | null {
+  // Only build a real ISO timestamp for specific (HH:MM) times.
+  // Backward compat: when timeType is absent, detect by HH:MM pattern.
+  const isSpecific = timeType != null ? timeType === "specific" : TIME_REGEX.test(time);
+  if (!isSpecific) return null;
+
+  const naive = `${date}T${time}:00`;
 
   // If it already carries timezone info, return it unchanged.
   if (HAS_TZ_REGEX.test(naive)) return naive;
@@ -96,7 +103,7 @@ export async function createOrderInCentralApi(
     customer_full_name:         order.customer_full_name ?? order.client_name,
     customer_phone:             order.customer_phone    ?? order.client_phone,
     client_notes:               order.client_notes || null,
-    scheduled_pickup_at:        normalizeScheduledPickupAtForCentralApi(order.scheduled_date, order.scheduled_time),
+    scheduled_pickup_at:        buildScheduledPickupAt(order.scheduled_date, order.scheduled_time, order.scheduled_time_type),
     distance_km:                order.distance_km,
     package_size:               order.package_size,
     price,

@@ -11,8 +11,9 @@ export const QuoteRequestSchema = z.object({
   // Service
   pickup_address:     z.string().min(1, "pickup_address is required").max(500, "pickup_address too long"),
   delivery_address:   z.string().min(1, "delivery_address is required").max(500, "delivery_address too long"),
-  scheduled_date:     z.string().min(1, "scheduled_date is required").max(30, "scheduled_date too long"),
-  scheduled_time:     z.string().min(1, "scheduled_time is required").max(50, "scheduled_time too long"),
+  scheduled_date:      z.string().min(1, "scheduled_date is required").max(30, "scheduled_date too long"),
+  scheduled_time:      z.string().min(1, "scheduled_time is required").max(50, "scheduled_time too long"),
+  scheduled_time_type: z.enum(["asap", "morning", "afternoon", "specific"]).optional(),
   package_size:       z.enum(["small", "medium", "large"], {
     errorMap: () => ({ message: "package_size must be small, medium or large" }),
   }),

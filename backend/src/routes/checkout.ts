@@ -77,6 +77,7 @@ checkoutRouter.post("/checkout", checkoutLimiter, async (req, res) => {
       delivery_address:      data.delivery_address,
       scheduled_date:        data.scheduled_date,
       scheduled_time:        data.scheduled_time,
+      scheduled_time_type:   data.scheduled_time_type,
       package_size:          data.package_size,
       client_notes:          data.client_notes,
       pickup_lat:            data.pickup_lat   ?? null,

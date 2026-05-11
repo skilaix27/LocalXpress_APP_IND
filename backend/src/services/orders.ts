@@ -25,6 +25,7 @@ export interface OrderDraft {
   delivery_address:      string;
   scheduled_date:        string;
   scheduled_time:        string;
+  scheduled_time_type?:  "asap" | "morning" | "afternoon" | "specific";
   package_size:          "small" | "medium" | "large";
   client_notes?:         string;
   pickup_lat?:           number | null;

@@ -118,13 +118,18 @@ const Index = () => {
 
     let scheduled_date = today;
     let scheduled_time = "Lo antes posible";
+    let scheduled_time_type: "asap" | "morning" | "afternoon" | "specific" = "asap";
+
     if (timeSlot === "hoy-manana") {
-      scheduled_time = "Mañana (10:00-14:00)";
+      scheduled_time      = "Mañana (10:00-14:00)";
+      scheduled_time_type = "morning";
     } else if (timeSlot === "hoy-tarde") {
-      scheduled_time = "Tarde (15:00-20:00)";
+      scheduled_time      = "Tarde (16:00-20:00)";
+      scheduled_time_type = "afternoon";
     } else if (timeSlot === "fecha-concreta") {
-      scheduled_date = specificDate;
-      scheduled_time = specificTime;
+      scheduled_date      = specificDate;
+      scheduled_time      = specificTime;
+      scheduled_time_type = "specific";
     }
 
     // Recipient and product info packed into notes (recipient identity
@@ -144,11 +149,12 @@ const Index = () => {
       customer_phone:     senderPhone.replace(/\s/g, ""),
       customer_email:     senderEmail.trim(),
       // Service
-      pickup_address:     pickupAddress.trim(),
-      delivery_address:   deliveryAddress.trim(),
+      pickup_address:      pickupAddress.trim(),
+      delivery_address:    deliveryAddress.trim(),
       scheduled_date,
       scheduled_time,
-      package_size:       PACKAGE_SIZE_MAP[productSize] ?? "small",
+      scheduled_time_type,
+      package_size:        PACKAGE_SIZE_MAP[productSize] ?? "small",
       client_notes:       noteParts.join(" | ") || undefined,
       ...(pickupLat   != null && pickupLng   != null ? { pickup_lat:   pickupLat,   pickup_lng:   pickupLng   } : {}),
       ...(deliveryLat != null && deliveryLng != null ? { delivery_lat: deliveryLat, delivery_lng: deliveryLng } : {}),
